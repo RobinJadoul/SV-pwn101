@@ -12,7 +12,7 @@
 typedef struct User {
     char username[LEN];
     char password[LEN];
-    uint32_t flags;
+    uint8_t flags;
 } User;
 
 User* all_users[NUM_USERS];
@@ -44,35 +44,54 @@ User* login() {
     }
     if (!user) return user;
     if (!(user->flags & CAN_LOGIN)) {
-        puts("This user cannot login!");
+        printf("This user cannot login!\n");
         return NULL;
     }
     printf("Password: ");
     scanf("%s", input);
     if (!strcmp(input, user->password)) {
-        puts("Wrong password!");
+        printf("Wrong password!\n");
         return NULL;
     }
     return user;
 }
 
+void show_bool(int b) {
+    printf(b ? "✅" : "❌");
+}
+
 void show_user(User* user) {
+    printf("Username: ");
+    printf(user->username);
+    printf("\nPassword: <hah, as if>\n");
+    printf("Can login: ");
+    show_bool(user->flags & CAN_LOGIN);
+    printf("\nCan change username: ");
+    show_bool(user->flags & CAN_CHANGE_NAME);
+    printf("\nIs admin: ");
+    show_bool(user->flags & IS_ADMIN);
+    printf("\n");
+    
 }
 
 void change_username(User* user) {
-    
+    if (!(user->flags & CAN_CHANGE_NAME)) {
+        printf("I'm afraid I can't let you do that!");
+        return;
+    }
+    scanf("%s", user->username);
 }
 
 void get_flag(User* user) {
     if (!(user->flags & IS_ADMIN)) {
-        puts("Only the admin can do that...");
+        printf("Only the admin can do that...\n");
         return;
     }
     FILE* f = fopen("flag.txt", "r");
     char flag[0x100];
     fread(flag, 0x100, 1, f);
     fclose(f);
-    puts(flag);
+    printf(flag);
 }
 
 int main() {
@@ -82,11 +101,11 @@ int main() {
         if (!user) {
             user = login();
             if (!user) continue;
-            puts("Logged in as:");
+            printf("Logged in as:\n");
             show_user(user);
         }
 
-        puts("Options:\n\t[0] Logout\n\t[1] Show user info\n\t[2] Change username\n\t[3] Get the flag!\n\t[*] Quit");
+        printf("Options:\n\t[0] Logout\n\t[1] Show user info\n\t[2] Change username\n\t[3] Get the flag!\n\t[*] Quit\n> ");
         int choice = 42;
         scanf("%d", &choice);
         switch (choice) {
