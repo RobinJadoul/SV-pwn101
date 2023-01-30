@@ -49,7 +49,7 @@ User* login() {
     }
     printf("Password: ");
     scanf("%s", input);
-    if (!strcmp(input, user->password)) {
+    if (strcmp(input, user->password)) {
         printf("Wrong password!\n");
         return NULL;
     }

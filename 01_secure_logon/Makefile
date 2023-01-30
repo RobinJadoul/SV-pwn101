@@ -8,4 +8,4 @@ PORT := 42001
 include ../util/Makefile.base
 
 secure_logon: secure_logon.c
-	gcc -O3 -o secure_logon secure_logon.c -fno-stack-protector
+	gcc -O3 -o secure_logon secure_logon.c -pie -Wl,-z,relro,-z,now
