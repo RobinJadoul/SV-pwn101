@@ -79,6 +79,7 @@ void change_username(User* user) {
         printf("I'm afraid I can't let you do that!");
         return;
     }
+    printf("New username? > ");
     scanf("%s", user->username);
 }
 
@@ -89,12 +90,19 @@ void get_flag(User* user) {
     }
     FILE* f = fopen("flag.txt", "r");
     char flag[0x100];
-    fread(flag, 0x100, 1, f);
+    flag[fread(flag, 1, 0x100, f)] = 0;
     fclose(f);
     printf(flag);
 }
 
+void init_buffering() {
+    setvbuf(stdin, NULL, _IONBF, 0);
+    setvbuf(stdout, NULL, _IONBF, 0);
+    setvbuf(stderr, NULL, _IONBF, 0);
+}
+
 int main() {
+    init_buffering();
     init_users();
     User* user = NULL;
     while (1) {
