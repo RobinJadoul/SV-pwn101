@@ -28,7 +28,7 @@ deploy: check_image
 	docker run --privileged --rm -d --name chal_${NAME} -p ${PORT}:5000 chal_${NAME}
 
 copy:
-	cp ${BUILD_PRODUCTS} ${DEST}
+	cp ${BUILD_PRODUCTS} ${EXTRA_FILES} ${DEST}
 	ln -s ${ENTRYPOINT} /entry
 
 check_image:
