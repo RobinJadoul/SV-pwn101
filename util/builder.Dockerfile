@@ -1,6 +1,6 @@
 ARG INNER
-ARG CHAL
 FROM $INNER as builder
+ARG CHAL
 
 RUN apt update -y \
     && apt dist-upgrade -y \
@@ -23,12 +23,12 @@ RUN git clone --depth 1 --branch 0.12 https://github.com/NixOS/patchelf \
     && cd .. \
     && rm -rf patchelf
 
-COPY $CHAL /mnt/
+COPY $CHAL/ /mnt/
 COPY util/ /util/
 RUN /util/builder.sh && rm -rf /util
 
 FROM ubuntu:latest
-RUN apt-get -y update && apt-get install -y \
+RUN apt-get -y update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     autoconf \
     bison \
     flex \

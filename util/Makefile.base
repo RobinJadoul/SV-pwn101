@@ -1,6 +1,7 @@
 .PHONY : all clean build mkdist dist deploy copy image check_image
 
 MY_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+CHAL_DIR := $(realpath $(CURDIR))
 CHROOT ?= ubuntu@sha256:965fbcae990b0467ed5657caceaec165018ef44a4d2d46c7cdea80a9dff0d1ea
 NAME ?= challenge_name
 PORT ?= 5000
@@ -8,7 +9,7 @@ PORT ?= 5000
 all: image
 
 image:
-	docker build --squash -t chal_${NAME} --build-arg INNER=${CHROOT} --build-arg CHAL=$(basename $(dir $(realpath $(firstword $(MAKEFILE_LIST))))) -f ${MY_DIR}/builder.Dockerfile $(dir $(MY_DIR))
+	docker build --squash -t chal_${NAME} --build-arg INNER=${CHROOT} --build-arg CHAL=$(notdir $(basename $(CHAL_DIR))) -f ${MY_DIR}/builder.Dockerfile $(dir $(MY_DIR:/=))
 
 build: ${BUILD_PRODUCTS}
 
