@@ -8,7 +8,7 @@ PORT ?= 5000
 all: image
 
 image:
-	docker build -t chal_${NAME} -v "${MY_DIR}:/util" --build-arg INNER=${CHROOT} -f ${MY_DIR}/builder.Dockerfile .
+	docker build --squash -t chal_${NAME} --build-arg INNER=${CHROOT} --build-arg CHAL=$(basename $(dir $(realpath $(firstword $(MAKEFILE_LIST))))) -f ${MY_DIR}/builder.Dockerfile $(dir $(MY_DIR))
 
 build: ${BUILD_PRODUCTS}
 

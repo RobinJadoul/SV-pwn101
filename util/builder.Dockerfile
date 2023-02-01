@@ -1,4 +1,5 @@
 ARG INNER
+ARG CHAL
 FROM $INNER as builder
 
 RUN apt update -y \
@@ -22,8 +23,9 @@ RUN git clone --depth 1 --branch 0.12 https://github.com/NixOS/patchelf \
     && cd .. \
     && rm -rf patchelf
 
-COPY . /mnt/
-RUN /util/builder.sh
+COPY $CHAL /mnt/
+COPY util/ /util/
+RUN /util/builder.sh && rm -rf /util
 
 FROM ubuntu:latest
 RUN apt-get -y update && apt-get install -y \
