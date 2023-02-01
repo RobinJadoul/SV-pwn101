@@ -49,4 +49,4 @@ RUN git clone https://github.com/google/nsjail /nsjail && cd /nsjail && make && 
 COPY --from=builder / /chroot
 
 EXPOSE 5000
-CMD nsjail -Ml --port 5000 --chroot /chroot/ --user 99999 --group 99999 -- /entry
+CMD nsjail -Ml --port 5000 --chroot /chroot/ --user 99999 --group 99999 --disable_proc -B /dev/urandom:/dev/urandom -B /dev/null:/dev/null -- /entry
