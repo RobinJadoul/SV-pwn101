@@ -33,7 +33,7 @@ void init_users() {
 }
 
 User* login() {
-    char input[LEN];
+    char input[0x100];
     User* user = NULL;
     printf("Username: ");
     scanf("%s", input);
@@ -125,6 +125,8 @@ int main() {
             break;
         case 2:
             change_username(user);
+            printf("Username changed successfully, please log in again with your new username now.\n");
+            user = NULL;
             break;
         case 3:
             get_flag(user);
