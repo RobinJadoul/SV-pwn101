@@ -28,13 +28,13 @@ void get_flag() {
 #define byte(x, i) (((char*)&x)[i])
 
 int main() {
-    char name[24];
-    long long my_secret = random();
     long long public = random();
+    long long my_secret = random();
+    char name[32];
 
     setup();
     puts("What is your name?");
-    fgets(name, 0x24, stdin);
+    fgets(name, 0x32, stdin);
     printf("Welcome %s, can you make it onto the leaderboard?\n", name);
 
     // Ensure we have enough entropy
@@ -52,7 +52,9 @@ int main() {
         printf("What is <REDACTED VALUE> + %lld?\n> ", public);
         long long answer;
         scanf("%lld", &answer);
-        if (answer != public + my_secret) return 1;
+        if (answer != public + my_secret) {
+            return 1;
+        }
     }
 
     printf("Congratulations %s, you solved my riddle. Have your reward: ", name);
