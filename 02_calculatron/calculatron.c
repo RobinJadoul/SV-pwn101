@@ -25,6 +25,8 @@ void get_flag() {
     puts(flag);
 }
 
+#define byte(x, i) (((char*)x)[i])
+
 int main() {
     char name[24];
     long long my_secret = random();
@@ -35,6 +37,16 @@ int main() {
     fgets(name, 0x24, stdin);
     printf("Welcome %s, can you make it onto the leaderboard?\n", name);
 
+    // Ensure we have enough entropy
+    for (int i = 0; i < sizeof(long long); i++) {
+        for (int j = 0; j < i; j++) {
+            if (byte(my_secret, i) == byte(my_secret, j)) {
+                puts("Out of entropy, please order a new computer!");
+                return 2;
+            }
+        }
+    }
+    
     for (int i = 0; i < 0x100; i++) {
         public = random();
         printf("What is <REDACTED VALUE> + %lld?\n> ", public);
