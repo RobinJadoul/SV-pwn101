@@ -32,7 +32,7 @@ int main() {
 
     setup();
     puts("What is your name?");
-    fread(name, 0x24, 1, stdin);
+    fgets(name, 0x24, stdin);
     printf("Welcome %s, can you make it onto the leaderboard?\n", name);
 
     for (int i = 0; i < 0x100; i++) {
