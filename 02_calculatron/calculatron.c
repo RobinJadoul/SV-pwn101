@@ -25,7 +25,7 @@ void get_flag() {
     puts(flag);
 }
 
-#define byte(x, i) (((char*)x)[i])
+#define byte(x, i) (((char*)&x)[i])
 
 int main() {
     char name[24];
