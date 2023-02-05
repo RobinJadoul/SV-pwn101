@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 
 void setup() {
     setvbuf(stdin, NULL, _IONBF, 0);
@@ -7,11 +8,7 @@ void setup() {
 }
 
 void ez() {
-    char flag[0x100] = {0};
-    FILE* f = fopen("flag.txt", "r");
-    fread(flag, sizeof(flag), 1, f);
-    fclose(f);
-    puts(flag);
+    execl("/bin/sh", "/bin/sh", NULL);
 }
 
 void gg() {

